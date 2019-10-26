@@ -8,7 +8,7 @@ import os
 def get_devices(key, data_path, device_name = "roadlamp"):
     """
     Get devices information and save them as
-    ../../../data/{device_name}/index.js
+    {data_path}/{device_name}/index.js
 
     Attributes:
         key(string): The key for the project.
@@ -29,7 +29,7 @@ def get_devices(key, data_path, device_name = "roadlamp"):
 def get_sensors_attributes(key, data_path, device_name = "roadlamp"):
     """
     Get sensors attributes for each devices and save them as
-    ../../../data/{device_name}/sensors.js
+    {data_path}/{device_name}/sensors.js
 
     Attributes:
         key(string): The key for the project.
@@ -71,7 +71,7 @@ def get_sensor_history_values(key, data_path, device_name, start, end):
     """
     Get sensors values for each devices in the specified time
     interval and save them as
-    ../../../data/{device_name}/sensors_history.js
+    {data_path}/{device_name}/sensors_history.js
 
     Attributes:
         key(string): The key for the project.
