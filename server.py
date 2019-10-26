@@ -21,11 +21,6 @@ def get_position_by_datatype():
     datatype = request.args["type"]
     return jsonify(loader.get_position_by_datatype(datatype))
 
-@app.route("/rand_position")
-def get_rand_position_by_datatype():
-    datatype = request.args["type"]
-    return jsonify(loader.get_rand_position_by_datatype(datatype))
-
 @app.route("/ndata")
 def get_n_lateset_data():
     device_id = request.args["id"]

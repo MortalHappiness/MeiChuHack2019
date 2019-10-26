@@ -93,45 +93,6 @@ class DataLoader:
             ans.append(information)
         return ans
 
-    def get_rand_position_by_datatype(self, datatype):
-        """
-        Arguments:
-            datatype(str): The datatype
-
-        Returns:
-            Array of information containing latitude, longitude,
-            and the measurement value.
-
-            [
-                {"lat": float,
-                 "lon": float,
-                 "value": int or float
-                }
-            ]
-        """
-        datatypes = ['rad',
-                     'hum',
-                     'temp',
-                     'brightness',
-                     'co2',
-                     'so2',
-                     'pa',
-                     'wind',
-                     'uv']
-        num = 30
-        if datatype not in datatypes:
-            raise Exception("Invalid datatype!")
-
-        ans = list()
-        for _ in range(num):
-            inf = dict()
-            inf["lat"] = random() * 100
-            inf["lon"] = random() * 100
-            inf["value"] = random() * 10
-            ans.append(inf)
-
-        return ans
-
     def datatype_to_timestamps_n(self, device_id, datatypes, n):
         device_idx = self.devices_id_to_idx[device_id]
         device = self.devices[device_idx]
@@ -199,7 +160,7 @@ class DataLoader:
             ans.append([""] + datatypes)
             for i in range(n):
                 ans.append([str(i + 1)] +
-                           [datatype_to_timestamps[datatype][i]["value"][0]
+                           [datatype_to_timestamps[datatype][i]["value"]
                             for datatype in datatypes])
             return ans
         elif fmt == "json":
@@ -215,7 +176,7 @@ class DataLoader:
                 sensor = self.sensors[sensor_idx]
                 sensor_copy = sensor.copy()
                 timestamps = datatype_to_timestamps[datatype]
-                sensor_copy["data"] = [timestamp["value"][0]
+                sensor_copy["data"] = [timestamp["value"]
                                        for timestamp in timestamps]
                 ans["sensors"].append(sensor_copy)
             return ans
