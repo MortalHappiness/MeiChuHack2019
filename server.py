@@ -2,7 +2,7 @@
 import os
 from flask import Flask, render_template
 app = Flask(__name__, static_folder = 'static', template_folder = 'templates')
-
+app.config["JSON_AS_ASCII"] = False
 
 @app.route("/")
 def index():
