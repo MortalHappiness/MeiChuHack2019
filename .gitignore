@@ -5,7 +5,12 @@ public/
 public/*
 .DS_Store
 
-## Templates 
+data/
+raw_data/
+
+# ============================================
+
+## Templates
 ## For node
 # Logs
 logs
@@ -112,6 +117,7 @@ dist
 # TernJS port file
 .tern-port
 
+# ============================================
 ## For python
 # Byte-compiled / optimized / DLL files
 __pycache__/

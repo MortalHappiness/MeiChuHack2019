@@ -1,7 +1,11 @@
+# type "python ./src/server/utils/crawler.py" to execute
+# ===================================
 import os
 import json
 import time
 import requests
+
+# ===================================
 
 def get_devices(key, data_path, device_name = "roadlamp"):
     """
@@ -20,7 +24,7 @@ def get_devices(key, data_path, device_name = "roadlamp"):
         os.mkdir(data_path)
     if not (os.path.exists(os.path.join(data_path, device_name))):
         os.mkdir(os.path.join(data_path, device_name))
-    
+
     header = {'CK':key}
     dev_list = []
     res = requests.get('https://iot.cht.com.tw/iot/v1/device', headers=header)
@@ -46,7 +50,7 @@ def get_sensors_attributes(key, data_path, device_name = "roadlamp"):
         os.mkdir(data_path)
     if not (os.path.exists(os.path.join(data_path, device_name))):
         os.mkdir(os.path.join(data_path, device_name))
-    
+
     header = {'CK':key}
     with open(os.path.join(data_path, device_name, 'index.json')) as fin:
         dev_list = json.load(fin)
@@ -79,7 +83,7 @@ def get_sensor_history_values(key, data_path, device_name, start, end):
         os.mkdir(data_path)
     if not (os.path.exists(os.path.join(data_path, device_name))):
         os.mkdir(os.path.join(data_path, device_name))
-    
+
     header = {'CK':key}
     with open(os.path.join(data_path, device_name, 'index.json')) as fp:
         dev_list = json.load(fp)
@@ -109,7 +113,7 @@ def get_sensor_history_values(key, data_path, device_name, start, end):
 # =======================================
 
 if __name__ == "__main__":
-    prjCK = "1"
-    get_devices(prjCK, "./data")
-    get_sensors_attributes(prjCK, "./data")
-    get_sensor_history_values(prjCK, "./data", "roadlamp", "2019-10-01T00:00:00Z", "2019-10-03T00:00:00Z")
+    prjCK = "PKJ2FK5NBYFA1RCGG8"
+    get_devices(prjCK, "./raw_data")
+    get_sensors_attributes(prjCK, "./raw_data")
+    get_sensor_history_values(prjCK, "./raw_data", "roadlamp", "2019-04-01T00:00:00Z", "2019-05-01T00:00:00Z")
