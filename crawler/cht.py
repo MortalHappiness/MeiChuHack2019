@@ -20,7 +20,7 @@ for device in dev_dict:
         #print("S "+sensor.get('id'))
         response3 = requests.get("https://iot.cht.com.tw/iot/v1/device/"+device.get('id')+"/sensor/"+sensor.get('id')+"/rawdata", data=payload, headers=payloadHeader)
         print(json.loads(response3.text))
-        #time.sleep(80e-3)
+        time.sleep(75e-3)
         counter += 1
 
 print("Count: "+counter)
