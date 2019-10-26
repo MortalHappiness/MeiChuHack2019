@@ -16,6 +16,14 @@ loader = DataLoader("./data", "roadlamp")
 def index():
     return render_template('index.html')
 
+@app.route("/dev_id")
+def get_device_id():
+    return jsonify(loader.get_device_id())
+
+@app.route("/datatypes")
+def get_datatypes():
+    return jsonify(loader.get_datatypes())
+
 @app.route("/position")
 def get_position_by_datatype():
     datatype = request.args["type"]
@@ -27,6 +35,14 @@ def get_n_lateset_data():
     datatypes = request.args.getlist("type[]")
     n = int(request.args["n"])
     return jsonify(loader.get_n_lateset_data(device_id, datatypes, n))
+
+@app.route("/download")
+def get_download_file():
+    device_id = request.args["id"]
+    datatypes = request.args.getlist("type[]")
+    n = int(request.args["n"])
+    fmt = request.args["fmt"]
+    return jsonify(loader.get_download_file(device_id, datatypes, n, fmt))
 
 # To prevent caching
 @app.after_request

@@ -57,6 +57,12 @@ class DataLoader:
         self.sensor_id_to_timestamps = sensor_id_to_timestamps
         self.datatype_to_sensor_ids = datatype_to_sensor_ids
 
+    def get_device_id(self):
+        return [device["id"] for device in self.devices]
+
+    def get_datatypes(self):
+        return self.datatypes
+
     def get_position_by_datatype(self, datatype):
         """
         Arguments:
@@ -92,6 +98,17 @@ class DataLoader:
             ans.append(information)
         return ans
 
+    def datatype_to_timestamps_n(self, device_id, datatypes, n):
+        device_idx = self.devices_id_to_idx[device_id]
+        device = self.devices[device_idx]
+        datatype_to_timestamps = dict()
+        for sensor_id in device["sensors"]:
+            datatype = sensor_id.split("_")[1]
+            if datatype in datatypes:
+                timestamps = self.sensor_id_to_timestamps[sensor_id]
+                datatype_to_timestamps[datatype] = timestamps[-n:]
+        return datatype_to_timestamps
+
     def get_n_lateset_data(self, device_id, datatypes, n):
         """
         Arguments:
@@ -112,14 +129,8 @@ class DataLoader:
             if datatype not in self.datatypes:
                 raise Exception("Invalid datatype query!")
 
-        device_idx = self.devices_id_to_idx[device_id]
-        device = self.devices[device_idx]
-        datatype_to_timestamps = dict()
-        for sensor_id in device["sensors"]:
-            datatype = sensor_id.split("_")[1]
-            if datatype in datatypes:
-                timestamps = self.sensor_id_to_timestamps[sensor_id]
-                datatype_to_timestamps[datatype] = timestamps[-n:]
+        datatype_to_timestamps = self.datatype_to_timestamps_n(
+                                      device_id, datatypes, n)
 
         ans = [dict() for _ in range(n)]
         for i in range(n):
@@ -127,3 +138,52 @@ class DataLoader:
                 ans[i][k] = v[i]["value"]
 
         return ans
+
+    def get_download_file(self, device_id, datatypes, n, fmt):
+        """
+        Arguments:
+            device_id(str): The device id
+            datatypes(list of str): list of datatypes
+            n(int): The number of latest data requested.
+            fmt(str): The file format to be downloaded.
+
+        Returns:
+            Depends on the format.
+
+            "csv": 2-d array
+            "json": json string
+        """
+        for datatype in datatypes:
+            if datatype not in self.datatypes:
+                raise Exception("Invalid datatype query!")
+
+        datatype_to_timestamps = self.datatype_to_timestamps_n(
+                                      device_id, datatypes, n)
+
+        if fmt == "csv":
+            ans = list()
+            ans.append([""] + datatypes)
+            for i in range(n):
+                ans.append([str(i + 1)] +
+                           [datatype_to_timestamps[datatype][i]["value"][0]
+                            for datatype in datatypes])
+            return ans
+        elif fmt == "json":
+            ans = dict()
+            device = self.devices[self.devices_id_to_idx[device_id]]
+            ans = device.copy()
+            ans["sensors"] = list()
+            for sensor_id in device["sensors"]:
+                datatype = sensor_id.split("_")[1]
+                if datatype not in datatypes:
+                    continue
+                sensor_idx = self.sensors_id_to_idx[sensor_id]
+                sensor = self.sensors[sensor_idx]
+                sensor_copy = sensor.copy()
+                timestamps = datatype_to_timestamps[datatype]
+                sensor_copy["data"] = [timestamp["value"][0]
+                                       for timestamp in timestamps]
+                ans["sensors"].append(sensor_copy)
+            return ans
+        else:
+            raise ValueError('Invalid value for "fmt"!')
