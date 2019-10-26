@@ -1,20 +1,26 @@
-from argparse import ArgumentParser
-from flask import Flask, send_file, request, jsonify
+#!/usr/bin/env python3
+import os
+from flask import Flask, render_template
+app = Flask(__name__, static_folder = 'static', template_folder = 'templates')
 
-app = Flask(
-    __name__, 
-    template_folder = "public", 
-    static_folder = "public",
-    static_url_path = ''
-)
 
 @app.route("/")
 def index():
-    return send_file('public/index.html')
+    return render_template('index.html')
+
+# To prevent caching
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
+
 
 if __name__ == "__main__":
-    parser = ArgumentParser()
-    parser.add_argument('-p', '--port', type = int, help = "Serving on port ...")
-    args = parser.parse_args()
-    print("Server running on port {}".format(args.port))
-    app.run(host = '0.0.0.0', port = args.port)
+    app.run(host='0.0.0.0', port=os.environ.get('PORT', 8080), debug=True)
