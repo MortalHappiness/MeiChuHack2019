@@ -36,7 +36,7 @@ def get_sensors_attributes(key, data_path, device_name = "roadlamp"):
         data_path(string): The path to the data folder.
         device_name: The name of the device.
 
-    Format for index.js:
+    Format for sensors.js:
         Array of array of sensors(attributes)
 
     Note:
@@ -80,7 +80,7 @@ def get_sensor_history_values(key, data_path, device_name, start, end):
         start(string): The start time of the time interval.
         end(string): The end time of the time interval.
 
-    Format for index.js:
+    Format for sensors_history.js:
         Array of array of sensors(attributes)
 
     Note:
