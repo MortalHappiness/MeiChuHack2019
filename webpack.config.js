@@ -1,12 +1,10 @@
 const path = require("path");
 const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 
 module.exports = {
-  entry: {
-    bundle: ["./src/index.js"]
-  },
+  entry: "./src/index.js",
   output: {
     filename: "bundle.js",
     path: path.join(__dirname, "public"),
@@ -53,11 +51,12 @@ module.exports = {
       }
     ]
   },
-  plugins: [
+  plugins:[
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
-      filename: "index.html"
-    }),
-    new webpack.HotModuleReplacementPlugin()
+      filename: 'index.html',
+      template: './src/index.html',
+      inject: true
+    })
   ]
 };
