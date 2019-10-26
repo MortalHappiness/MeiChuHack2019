@@ -16,14 +16,6 @@ loader = DataLoader("./data", "roadlamp")
 def index():
     return render_template('index.html')
 
-@app.route("/dev_id")
-def get_device_id():
-    return jsonify(loader.get_device_id())
-
-@app.route("/datatypes")
-def get_datatypes():
-    return jsonify(loader.get_datatypes())
-
 @app.route("/position")
 def get_position_by_datatype():
     datatype = request.args["type"]

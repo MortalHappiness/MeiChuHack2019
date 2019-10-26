@@ -57,12 +57,6 @@ class DataLoader:
         self.sensor_id_to_timestamps = sensor_id_to_timestamps
         self.datatype_to_sensor_ids = datatype_to_sensor_ids
 
-    def get_device_id(self):
-        return [device["id"] for device in self.devices]
-
-    def get_datatypes(self):
-        return self.datatypes
-
     def get_position_by_datatype(self, datatype):
         """
         Arguments:
