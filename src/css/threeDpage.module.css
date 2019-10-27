@@ -1,0 +1,14 @@
+.container {
+    width: 100%;
+    display: flex;
+}
+
+.graphContainer {
+    width: 70%;
+    height: 90vh;
+}
+
+.selectContainer {
+    width: 30%;
+    height: 90vh;
+}

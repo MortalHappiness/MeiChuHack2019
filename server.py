@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
 from flask import Flask, render_template, jsonify, request
-
+from json import loads
 from src.server.utils.data_loader import DataLoader
 # ===============================
 
@@ -16,24 +16,33 @@ loader = DataLoader("./data", "roadlamp")
 def index():
     return render_template('index.html')
 
-@app.route("/position")
+@app.route("/position", methods=['POST'])
 def get_position_by_datatype():
-    datatype = request.args["type"]
+    data = loads(request.data.decode('utf-8')
+                 if type(request.data) is bytes else request.data)
+    print(data)
+    datatype = data["type"]
     return jsonify(loader.get_position_by_datatype(datatype))
 
-@app.route("/ndata")
+@app.route("/ndata", methods=['POST'])
 def get_n_lateset_data():
-    device_id = request.args["id"]
-    datatypes = request.args.getlist("type[]")
-    n = int(request.args["n"])
+    data = loads(request.data.decode('utf-8')
+                 if type(request.data) is bytes else request.data)
+    print(data)
+    device_id = data["id"]
+    datatypes = data["type"]
+    n = data["n"]
     return jsonify(loader.get_n_lateset_data(device_id, datatypes, n))
 
-@app.route("/download")
+@app.route("/download", methods=['POST'])
 def get_download_file():
-    device_id = request.args["id"]
-    datatypes = request.args.getlist("type[]")
-    n = int(request.args["n"])
-    fmt = request.args["fmt"]
+    data = loads(request.data.decode('utf-8')
+                 if type(request.data) is bytes else request.data)
+    print(data)
+    device_id = data["id"]
+    datatypes = data["type"]
+    n = data["n"]
+    fmt = data["fmt"]
     return jsonify(loader.get_download_file(device_id, datatypes, n, fmt))
 
 # To prevent caching

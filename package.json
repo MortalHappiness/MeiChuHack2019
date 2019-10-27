@@ -1,46 +1,30 @@
 {
-  "name": "meichu_hackathon_2019",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --devtool eval --progress --colors --content-base build --port 8082",
-    "build": "webpack --config webpack.config.js --mode development",
-    "watch": "webpack --watch"
+    "dev": "webpack --mode development",
+    "start": "webpack --mode development --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MortalHappiness/MeiChuHack2019.git"
-  },
-  "keywords": [
-    "MeichuHackathon"
-  ],
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-react": "^6.24.1",
-    "copy-webpack-plugin": "^4.5.2",
-    "css-loader": "^1.0.0",
-    "file-loader": "^2.0.0",
-    "html-webpack-plugin": "^3.2.0",
-    "image-webpack-loader": "^4.4.0",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^0.23.1",
-    "webpack": "^4.19.1",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^3.2.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "@material-ui/core": "^3.9.3",
-    "@material-ui/icons": "^3.0.2",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
-    "webpack-dev-server": "^3.1.10"
-  },
-  "bugs": {
-    "url": "https://github.com/MortalHappiness/MeiChuHack2019/issues"
-  },
-  "homepage": "https://github.com/MortalHappiness/MeiChuHack2019#README"
+    "@material-ui/core": "^4.5.1",
+    "@material-ui/icons": "^4.5.1",
+    "plotly.js": "^1.50.1",
+    "plotly.js-dist": "^1.50.1",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-plotly.js": "^2.4.0",
+    "react-router-dom": "^5.1.2"
+  }
 }
